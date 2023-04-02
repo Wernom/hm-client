@@ -1,14 +1,17 @@
-import React from 'react'
-import { AuthContext } from '../services/AuthProvider'
-import { useAuth } from '../services/hook'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import RoomDisplayData from './RoomDisplayData'
+import RoomGraph from './RoomGraph'
+
+function DashboardContent() {
+  return (
+    <Container maxWidth="xl" sx={{ mt: 1, mb: 1 }}>
+      <RoomDisplayData />
+    </Container>
+  )
+}
 
 export default function Dashboard() {
-  const { token } = useAuth()
-
-  return (
-    <>
-      <div>Dashboard</div>
-      <div>Authenticated as {token}</div>
-    </>
-  )
+  return <DashboardContent />
 }

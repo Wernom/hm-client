@@ -1,51 +1,35 @@
-import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import { Routes, Route, NavLink } from 'react-router-dom'
 import Dashboard from './Dashboard/Dashboard'
 import Login from './Login/Login'
+import Layout from './Navigation/Layout'
 import { AuthProvider } from './services/AuthProvider'
-import { useAuth } from './services/hook'
+import { DataProvider } from './services/DataProvider'
+import { RoomProvider } from './services/RoomProvider'
 import { ProtectedRoute } from './services/Route'
 
 const App = () => {
   return (
     <AuthProvider>
-      <h1>React Router</h1>
-
-      <Navigation />
-
-      <Routes>
-        <Route index element={<Login />} />
-        <Route path="login" element={<Login />} />
-        <Route
-          path="dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route path="*" element={<Login />} />
-      </Routes>
+      <DataProvider>
+        {/* <Navigation /> */}
+        <Routes>
+          <Route index element={<Login />} />
+          <Route path="login" element={<Login />} />
+          <Route
+            path="dashboard"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Login />} />
+        </Routes>
+      </DataProvider>
     </AuthProvider>
-  )
-}
-
-const Navigation = () => {
-  const { token, onLogout } = useAuth()
-
-  return (
-    <nav>
-      <NavLink to="/login">Home</NavLink>
-      <NavLink to="/dashboard">Dashboard</NavLink>
-
-      {token && (
-        <button type="button" onClick={onLogout}>
-          Sign Out
-        </button>
-      )}
-    </nav>
   )
 }
 
